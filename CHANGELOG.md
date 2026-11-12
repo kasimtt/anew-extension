@@ -34,6 +34,28 @@ the core is Markdown plus a few POSIX scripts, so upgrades are file edits, not m
    ADRs are never renumbered.
 6. Write the new version into `.anew-version`.
 
+## Unreleased — UI specs carry an approved design artifact (fork spec 0006)
+
+Text-only UI specs let the first look at the screens happen in BUILD. A UI spec now carries a
+design the Analyst draws in ANALYZE, approved before the spec (ANEW-F0001, supersedes ANEW-0008 in
+part).
+
+- **Design artifact** (`prompts/spec.md`, `prompts/clarify.md`, `specs/TEMPLATE.md`,
+  `specs/TEMPLATE-mini.md`): one artboard per screen × state of "User experience", labelled with
+  the criteria it serves, at a stable address and a fixed version. New fields `- Design:` and
+  `- Design approved by / on:`. "Never invent visuals" is replaced: the Analyst draws, the human
+  approves.
+- **Design gate** (`workflows/segments.md`, `feature-development.md`, `change-request.md`): its own
+  decision, before spec approval; a UI spec is `Approved` only with both. Shared with approver,
+  reviewer and QA. A later design change is a spec change (R-08).
+- **doctor**: past approval (and in a new ship), a UI spec without the address or a dated design
+  approval is a gate — WARN locally, FAIL under `--strict`. An empty "User experience" counts as
+  UI; a spec without that heading (older) is not judged. selftest 281 → 305.
+- **VERIFY** compares screenshots with the approved artboards, screen × state (`docs/testing.md`,
+  `prompts/verify.md`). The Claude Code adapter names the tool (Claude Design); the core names none.
+
+Upgrade: copy the two template fields into your open UI specs before they pass approval.
+
 ## v1.24.1 — v1.24 is the first LTS line
 
 Organizations adopting ANEW need one version to train on and build on while new work continues.

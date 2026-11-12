@@ -23,3 +23,5 @@ request: $ARGUMENTS
      Approved spec, /build needs the filled "Approved by / on" line — the plan gate is never
      skipped in this lane. One-pass review (workflows/segments.md, "The chainer") may join
      /review and /verify in the `reviewer` subagent when its conditions hold.
+   - A UI change, in either mode: the design artifact and its approval come before spec
+     approval, drawn as /analyze says (Claude Design artifact, ANEW-F0001).
