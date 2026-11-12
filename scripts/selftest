@@ -431,6 +431,17 @@ doctor;            hasnt "0051-noui.md" "User experience 'none — no user inter
 put specs/active/0051-noui.md '# Spec 0051' '- Status: Approved' '' '## User experience' '<!-- a comment -->' \
   '**None** — no user interface'
 doctor;            hasnt "0051-noui.md" "… 'none' after a comment, in any case and emphasis"
+put specs/active/0051-noui.md '# Spec 0051' '- Status: Approved' '' '## User experience' 'none – no user interface'
+doctor;            hasnt "0051-noui.md" "… with an en dash (–)"
+put specs/active/0051-noui.md '# Spec 0051' '- Status: Approved' '' '## User experience' 'none - no user interface'
+doctor;            hasnt "0051-noui.md" "… with an ASCII hyphen (-)"
+put specs/done/0068-noui-ship.md '# Spec 0068' '- Status: Shipped' '- Design: none — no user interface' '' \
+  '## User experience' 'none — no user interface' '' '## Acceptance criteria' '- [x] AC-1 — x'
+put specs/done/0069-ui-ship.md '# Spec 0069' '- Status: Shipped' '- Design:' '' '## User experience' 'none for now' \
+  '' '## Acceptance criteria' '- [x] AC-1 — x'
+doctor --strict;   hasnt "0068-noui-ship.md" "a new ship without UI is not judged (the phrase read under LC_ALL=C)"
+has "UI spec without a design artifact: specs/done/0069-ui-ship.md" "… while a UI ship in the same run is (the loop reads them)"
+rm -f "$W/specs/done/0068-noui-ship.md" "$W/specs/done/0069-ui-ship.md"
 put specs/active/0052-blank.md '# Spec 0052' '- Status: Approved' '' '## User experience' '<!-- Required heading;' \
   '     still the template text -->' '' '## Acceptance criteria'
 doctor;            has "UI spec without a design artifact: specs/active/0052-blank.md" "fail closed: a User experience left empty (comment only) is a UI spec"

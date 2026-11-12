@@ -339,7 +339,8 @@ done
 # else, an empty body too, counts as UI (fail closed). The heading wins over the mini-spec rule.
 # No such heading: a mini-spec (## Preserved behavior) is judged by its Design line alone — an
 # address needs its approval, an empty one is left to review (UI cannot be read from a
-# mini-spec's text); any other spec is older (A-1) → not judged. ---
+# mini-spec's text); any other spec is older (A-1) → not judged. Text after the phrase is not
+# read ("none — no user interface, except …" passes): that is left to review. ---
 spec_field() {   # <file> <label>: the field's value, HTML comments and outer blanks removed; a
                  # comment still open at the line's end (it closes on a later line) is cut there
   grep -m1 "^- $2" "$1" | tr -d '\r' | sed 's/<!--.*-->//g; s/<!--.*$//; s/^- [^:]*:[[:space:]]*//; s/[[:space:]]*$//'

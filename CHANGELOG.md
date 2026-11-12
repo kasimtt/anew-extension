@@ -57,7 +57,8 @@ part).
 
 Upgrade: copy the two template fields into your open UI specs. A UI spec already `Approved` or
 `In progress` fails `--strict` until it carries both records — draw and approve its design (or
-record an existing approved one) in the upgrade PR.
+record an existing approved one) in the upgrade PR. A User experience that says only `none` now
+counts as UI: write the whole phrase `none — no user interface`.
 
 ## v1.24.1 — v1.24 is the first LTS line
 
