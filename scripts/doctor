@@ -331,6 +331,48 @@ for s in "$ROOT/specs/active/"[0-9]*.md; do
     *) warn "self-critique $sc: specs/active/$(basename "$s")" ;;
   esac
 done
+
+# --- UI design records (ANEW-F0001): past approval, a UI spec carries `- Design: <address>` and
+# `- Design approved by / on: <name>, <YYYY-MM-DD>`; gate() = WARN locally, FAIL under --strict.
+# A UI spec: its "## User experience" body (HTML comments dropped) does not start with "none" —
+# an empty body counts as UI (fail closed). No such heading (an older spec, A-1) → not judged.
+# A mini-spec (## Preserved behavior) is judged by its Design line alone: an address needs its
+# approval; an empty one is left to review (UI cannot be read from a mini-spec's text). ---
+spec_field() {   # <file> <label>: the field's value, HTML comments and outer blanks removed; a
+                 # comment still open at the line's end (it closes on a later line) is cut there
+  grep -m1 "^- $2" "$1" | tr -d '\r' | sed 's/<!--.*-->//g; s/<!--.*$//; s/^- [^:]*:[[:space:]]*//; s/[[:space:]]*$//'
+}
+ux_kind() {      # <file>: ui | none | absent
+  tr -d '\r' < "$1" | awk '
+    /^## / { if (inux) { inux = 0; over = 1 } else if (!over && $0 ~ /^## User experience/) { inux = 1; seen = 1; next } }
+    inux { body = body "\n" $0 }
+    END {
+      if (!seen) { print "absent"; exit }
+      while ((i = index(body, "<!--")) > 0) {
+        rest = substr(body, i + 4); j = index(rest, "-->")
+        body = substr(body, 1, i - 1) (j ? substr(rest, j + 3) : "")
+      }
+      gsub(/^[ \t\n]+/, "", body); sub(/^[-*+_`"\047 \t]+/, "", body)
+      print (tolower(substr(body, 1, 4)) == "none") ? "none" : "ui" }'
+}
+design_check() { # <file> <shown path> <status shown>
+  if grep -q '^## Preserved behavior' "$1"; then
+    case "$(spec_field "$1" 'Design:')" in ""|"-"|"—"|[Nn][Oo][Nn][Ee]*) return 0 ;; esac
+  else
+    [ "$(ux_kind "$1")" = ui ] || return 0
+    case "$(spec_field "$1" 'Design:')" in
+      ""|"-"|"—"|[Nn][Oo][Nn][Ee]*) gate "UI spec without a design artifact: $2 (status: $3) — '- Design:' needs the artifact address (ANEW-F0001)" ;;
+    esac
+  fi
+  spec_field "$1" 'Design approved by / on:' | grep -Eq '^[^,]*[^ ,][^,]*, *[0-9]{4}-[0-9]{2}-[0-9]{2}' \
+    || gate "UI spec without a recorded design approval: $2 (status: $3) — '- Design approved by / on: <name>, <YYYY-MM-DD>' (ANEW-F0001)"
+}
+for s in "$ROOT/specs/active/"[0-9]*.md; do
+  [ -f "$s" ] || continue
+  st=$(spec_field "$s" 'Status:')
+  case "$st" in Approved|"In progress") design_check "$s" "specs/active/$(basename "$s")" "$st" ;; esac
+done
+
 dupsrc=$(for s in "$ROOT/specs/active/"[0-9]*.md; do
   [ -f "$s" ] && grep -m1 '^- Source:' "$s" | sed 's/<!--.*-->//g; s/^- Source:[[:space:]]*//; s/[[:space:]]*$//'
 done | grep -v '^$' | sort | uniq -d)
@@ -400,6 +442,7 @@ $(git -C "$ROOT" -c core.quotePath=false ls-files --others --exclude-standard --
       case "$f" in specs/done/[0-9]*.md) ;; *) continue ;; esac
       [ -f "$ROOT/$f" ] || continue
       self=$(basename "$f" | sed 's/-.*//')
+      design_check "$ROOT/$f" "$f" "new ship"
       # Sensitive: a line that starts (after bullet / emphasis) with "sensitive area(s)" and a
       # separator (: — -); its value, past emphasis, quotes or brackets, starts with none or n/a,
       # or the spec is sensitive (an empty value too).

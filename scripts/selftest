@@ -405,6 +405,60 @@ doctor;            hasnt "self-critique" "self-critique done → no line"
 put specs/active/0030-sc.md '# Spec 0030' '- Status: Approved'
 doctor;            hasnt "self-critique" "no Self-critique field (older spec) → no line"
 
+# UI design records (ANEW-F0001): a spec whose "User experience" is not "none" needs, past
+# approval, a design artifact address and a recorded design approval; gate() = WARN / FAIL --strict.
+ux_ui()   { put "specs/active/$1" "# Spec ${1%%-*}" "- Status: $2" "- Design: $3" "- Design approved by / on: $4" \
+              '' '## User experience' '- Flow: list → detail' '- States: empty, error, success' '' '## Acceptance criteria' '- [ ] AC-1 — x'; }
+reset; ux_ui 0050-ui.md Approved '' '—'
+doctor;            has "WARN  UI spec without a design artifact: specs/active/0050-ui.md (status: Approved)" "an approved UI spec with no design artifact → WARN"
+has "WARN  UI spec without a recorded design approval: specs/active/0050-ui.md (status: Approved)" "… and no design approval → WARN"
+doctor --strict;   exits 1 "a UI spec without design records under --strict"
+has "FAIL  UI spec without a design artifact: specs/active/0050-ui.md" "… is a gate (FAIL under --strict)"
+ux_ui 0050-ui.md Draft '' '—'
+doctor;            hasnt "UI spec without" "a Draft UI spec is not judged yet"
+ux_ui 0050-ui.md 'In progress' '—' 'Ada, 2026-11-12'
+doctor;            has "UI spec without a design artifact: specs/active/0050-ui.md (status: In progress)" "In progress is judged; '—' is no address"
+ux_ui 0050-ui.md Approved 'none — no user interface' 'Ada, 2026-11-12'
+doctor;            has "UI spec without a design artifact: specs/active/0050-ui.md" "a UI spec cannot say Design: none"
+ux_ui 0050-ui.md Approved 'https://example.invalid/artifact/1 (spec 0050 — approved)' 'Ada'
+doctor;            has "UI spec without a recorded design approval: specs/active/0050-ui.md" "an approval without a date is not recorded"
+hasnt "UI spec without a design artifact" "… while the address is accepted"
+ux_ui 0050-ui.md Approved 'https://example.invalid/artifact/1 (spec 0050 — approved)' 'Ada, 2026-11-12 <!-- name, date -->'
+doctor --strict;   hasnt "UI spec without" "address and dated approval → no line, also under --strict"
+put specs/active/0051-noui.md '# Spec 0051' '- Status: Approved' '- Design:' '' '## User experience' \
+  'none — no user interface' '' '## Acceptance criteria'
+doctor;            hasnt "0051-noui.md" "User experience 'none — no user interface' → not a UI spec"
+put specs/active/0051-noui.md '# Spec 0051' '- Status: Approved' '' '## User experience' '<!-- a comment -->' \
+  '**None** — no user interface'
+doctor;            hasnt "0051-noui.md" "… 'none' after a comment, in any case and emphasis"
+put specs/active/0052-blank.md '# Spec 0052' '- Status: Approved' '' '## User experience' '<!-- Required heading;' \
+  '     still the template text -->' '' '## Acceptance criteria'
+doctor;            has "UI spec without a design artifact: specs/active/0052-blank.md" "fail closed: a User experience left empty (comment only) is a UI spec"
+put specs/active/0053-old.md '# Spec 0053' '- Status: Approved' '' '## Requirements' '- r'
+doctor;            hasnt "0053-old.md" "no User experience heading (older spec) → not judged (A-1; review catches a removed heading)"
+put specs/active/0054-mini.md '# Spec 0054 (mini)' '- Status: Approved' '- Source: REQ-1' '- Design: https://example.invalid/artifact/2' \
+  '- Design approved by / on: —' '' '## Changed behavior' '- [ ] CB-1 — x' '' '## Preserved behavior' '- [ ] PB-1 — y'
+doctor;            has "UI spec without a recorded design approval: specs/active/0054-mini.md" "a mini-spec with a Design address needs its approval"
+put specs/active/0054-mini.md '# Spec 0054 (mini)' '- Status: Approved' '- Source: REQ-1' '- Design:' \
+  '' '## Changed behavior' '- [ ] CB-1 — x' '' '## Preserved behavior' '- [ ] PB-1 — y'
+doctor;            hasnt "0054-mini.md" "a mini-spec with no Design address is left to review (G-1)"
+reset; put specs/done/0055-ship.md '# Spec 0055' '- Status: Shipped' '- Design: https://example.invalid/artifact/3' \
+  '- Design approved by / on: —' '' '## User experience' '- Flow: a → b' '' '## Acceptance criteria' '- [x] AC-1 — x'
+doctor;            has "WARN  UI spec without a recorded design approval: specs/done/0055-ship.md (status: new ship)" "a new ship is judged too"
+commit "ship 0055"
+run sh -c 'unset GITHUB_BASE_REF GITHUB_EVENT_PATH; ANEW_BASE_REF=$1; export ANEW_BASE_REF; shift; exec sh "$0" "$@"' "$W/scripts/doctor" "$BASE" --strict
+exits 1 "a new UI ship without its design approval under --strict"
+has "FAIL  UI spec without a recorded design approval: specs/done/0055-ship.md" "… FAIL vs the base"
+doctor;            hasnt "0055-ship.md" "a spec already shipped at the base is not judged again (PB-3)"
+reset; put specs/active/0056-tpl.md '# Spec 0056' '- Status: Approved' '- Design: <!-- UI spec only — the address' \
+  '       and the version -->' '- Design approved by / on: —' '' '## User experience' '- Flow: a → b'
+doctor;            has "UI spec without a design artifact: specs/active/0056-tpl.md" "an unfilled Design field (a comment over several lines) is no address"
+put specs/active/0057-mtpl.md '# Spec 0057 (mini)' '- Status: Approved' '- Source: REQ-2' '- Design: <!-- MANDATORY for a UI change' \
+  '  … -->' '' '## Preserved behavior' '- [ ] PB-1 — y'
+doctor;            hasnt "0057-mtpl.md" "… nor in a mini-spec (left to review, no false approval gate)"
+grep -q '^- Design approved by / on:' "$W/specs/TEMPLATE.md"; report $? "specs/TEMPLATE.md carries the label doctor reads"
+grep -q '^- Design approved by / on:' "$W/specs/TEMPLATE-mini.md"; report $? "specs/TEMPLATE-mini.md carries it too"
+
 # Criterion ↔ test map: every backticked name in an active plan must be held by a file outside
 # specs/ (path, basename or text); WARN only; shipped plans are not scanned.
 reset
