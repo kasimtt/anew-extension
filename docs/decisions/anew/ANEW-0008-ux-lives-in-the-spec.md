@@ -1,6 +1,6 @@
 # ANEW-0008 — User experience lives in the spec
 
-- Status: Accepted
+- Status: Superseded in part by ANEW-F0001 (design artifact and its approval gate)
 - Date: 2026-10-07
 - Revised: 2026-10-19 — moved to docs/decisions/anew/ as ANEW-0008 (template namespace, ANEW-0010); decision unchanged
 

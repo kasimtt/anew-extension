@@ -91,6 +91,8 @@ onları normal bağımsız review yakalar.
   push ederiz.
 - Branch ve commit kuralları `docs/git.md` ile aynıdır: default branch'e doğrudan commit yok,
   her iş kendi branch'inde, commit'ler isimli yollarla atılır.
+- Fork'un kendi ANEW kararları `docs/decisions/anew/ANEW-F<NNNN>-<slug>.md` olarak, 0001'den
+  başlayarak numaralanır. Böylece upstream'in `ANEW-NNNN` sırasıyla çakışmaz (plan 0006, R-1).
 
 ## Yerel kurulum (her geliştirici, bir kez)
 
