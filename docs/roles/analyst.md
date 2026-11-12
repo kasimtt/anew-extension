@@ -6,7 +6,8 @@ and the change-request triage (`workflows/change-request.md`: verdict with ratio
 **Reads:** `AGENTS.md`, `docs/domain.md`, `docs/architecture.md` (boundaries only), `specs/TEMPLATE.md`.
 
 **Powers & prohibitions:**
-- MAY: draft intent, ask clarifying questions (each with a recommendation), write/revise specs.
+- MAY: draft intent, ask clarifying questions (each with a recommendation), write/revise specs,
+  draw the design artifact of a UI spec from the analysis and ask for its approval (ANEW-F0001).
 - MAY NOT: write technical solutions into Requirements (no endpoints, tables, caches), write code
   or plans, resolve ambiguity by assumption.
 

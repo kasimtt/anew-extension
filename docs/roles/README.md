@@ -37,7 +37,8 @@ Start only after my confirmation.
 ## The human's gates
 
 Roles produce and verify; the human decides. These are never delegated to an agent, in any mode:
-spec approval (light in lite) · plan approval, recorded in the plan file · finding triage
+design approval of a UI spec, before its spec approval (ANEW-F0001) · spec approval (light in
+lite) · plan approval, recorded in the plan file · finding triage
 (real / noise / defer / investigate) · ship · the change-request triage verdict · the
 trivial-change policy and the operating mode (set at bootstrap).
 

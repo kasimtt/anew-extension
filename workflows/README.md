@@ -18,8 +18,9 @@ uses (`prompts/…`) — workflows never copy prompt text, so there is exactly o
 - **[GATE: human]** — a human decision. Never automated, in any mode.
 - **[GATE: human — strict]** — required in strict mode; in lite mode the agent states its
   assumption and proceeds unless you object — except in a sensitive area, where it is asked.
-- **[GATE: light]** — asked in every mode, but in lite it is a quick yes/no (spec approval): it is
-  never skipped, because it is the entry condition of the next segment.
+- **[GATE: light]** — asked in every mode, but in lite it is a quick yes/no (spec approval, and
+  before it a UI spec's design approval — ANEW-F0001): it is never skipped, because it is the
+  entry condition of the next segment.
 - **Role:** who executes the step (see `docs/roles/`). In strict mode, role = separate session.
 - **Evidence:** what must exist before the step counts as done.
 

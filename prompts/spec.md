@@ -9,10 +9,17 @@ Requirements must describe BEHAVIOR — no technical solutions (no endpoints, ta
 Acceptance criteria: each line independently testable; cover the happy path, boundaries,
 empty states, invalid inputs, and authorization. Constraints include explicit OUT OF SCOPE
 items, and `Sensitive area: <name>` when the work touches one (docs/domain.md).
-User experience: fill flow, states, design link and accessibility, or "none — no user interface".
-Every listed state gets a criterion. Never invent visuals. Ask for a link to a fixed version of
-the design (or a dated export), so verification compares against what was approved; a design
-that changes later is a spec change (R-08).
+User experience: fill flow, states and accessibility, or "none — no user interface".
+Every listed state gets a criterion.
+Design (a UI spec, or a mini-spec that changes UI — ANEW-F0001): DRAW a design artifact from
+this analysis, with a stable address and versions: one artboard per screen × state the section
+lists, each labelled with the criteria it serves ("List · empty — AC-2"); nothing on it that the
+spec does not say. Write its address in `- Design:`. Then the design gate, BEFORE spec approval
+(workflows/segments.md, ANALYZE): share the artifact with the approver, reviewer and QA, ask for
+design approval as its own decision, and on approval record the fixed version ("<address>
+(<version label>)", or a dated export when the tool has no versions) and
+`- Design approved by / on: <name>, <YYYY-MM-DD>`. Feedback → redraw, ask again. A design change
+after approval is a spec change (R-08). No UI → `- Design: none — no user interface`.
 Write in the docs language (AGENTS.md, Language); field labels and Status values stay English.
 
 Then run a SELF-CRITIQUE pass as a hostile reader: which questions would a developer still have?
