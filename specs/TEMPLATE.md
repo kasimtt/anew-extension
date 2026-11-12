@@ -29,7 +29,7 @@ what is deliberately NOT being done. Decisions from clarifying questions are fol
 <!-- Behavior, not technical solutions. No endpoints, tables, or caches here — the plan owns "how". -->
 
 ## User experience
-<!-- Required heading; no UI → write "none — no user interface". The behavior as the user sees it,
+<!-- Required heading; no UI → write "none — no user interface" (stays English: doctor reads it). The behavior as the user sees it,
      not visual polish:
      - Flow: the steps a user takes, entry point → outcome.
      - States: every state of each screen — empty, loading, error, success, no permission.

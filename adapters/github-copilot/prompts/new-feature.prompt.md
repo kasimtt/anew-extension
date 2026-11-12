@@ -9,7 +9,7 @@ Rule: Segments always stop; /new-feature flows only as far as the mode allows.
   with /analyze; subsequent roles run /plan, /build, /review, /verify in their own chats."
 - **unset** — stop; bootstrap has not run (paste prompts/bootstrap.md).
 - **lite** — chain /analyze → /plan → /build → /review → /verify for ${input:target}, entry
-  checks included. Stop at the four gates (spec approval, plan approval, triage, ship),
+  checks included. Stop at the four gates (spec approval — a UI spec asks its design approval first, as its own decision, ANEW-F0001 —, plan approval, triage, ship),
   one decision per gate message (workflows/segments.md, Contract, Gate). If a
   matching spec exists in specs/active/, resume from its next gate — never a twin spec. For
   REVIEW, hand off to the `reviewer` custom agent (or a fresh chat) and bring the findings back

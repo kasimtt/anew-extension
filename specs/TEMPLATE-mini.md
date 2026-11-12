@@ -13,7 +13,6 @@
   the repo. No UI change → "none — no user interface". -->
 - Design approved by / on: —
   <!-- UI change only — "<name>, <YYYY-MM-DD>", at the design gate, before spec approval. -->
-
 - Supersedes: <!-- optional — <NNNN>/AC-x of the shipped spec whose behavior this replaces. specs/done/ is never edited. -->
 
 ## Intent

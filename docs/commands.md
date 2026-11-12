@@ -320,7 +320,7 @@ lives in [`prompts/recovery/README.md`](../prompts/recovery/README.md).
 | `scripts/residue` | Check leaves nothing running | `RESIDUE CLEAN` / `RESIDUE FOUND` / `RESIDUE NOT MEASURED` | Same | Same |
 | `scripts/selftest` | ANEW's scripts behave as documented | Pass / fail count | Same | Same |
 | `/bootstrap` | Adapt ANEW to the project | Language · interview · report | Sets the mode | Sets the mode |
-| `/new-feature` | Chain the segments | Each of the four gates | Chains | Refuses |
+| `/new-feature` | Chain the segments | Each of the four gates (UI: design approval before spec approval) | Chains | Refuses |
 | `/analyze` | Intent → approved spec | Design approval (UI) · spec approval | Clarify folded into draft | Clarify first |
 | `/plan` | Approved spec → approved plan | Plan approval | Same | Own session |
 | `/build` | Approved plan → green check | Handoff with check output | Same | Own session |
@@ -336,7 +336,7 @@ lives in [`prompts/recovery/README.md`](../prompts/recovery/README.md).
 
 1. **Segments always stop.** Every segment ends at its handoff; only `/new-feature` (lite) moves on,
    and only after you approve.
-2. **The four human gates — spec approval, plan approval, triage, ship — are never automated, in
+2. **The four human gates — spec approval (with a UI spec's design approval before it), plan approval, triage, ship — are never automated, in
    any mode.**
 
 The same commands exist in Claude Code, Cursor, GitHub Copilot and Codex (`./scripts/init <tool>`;

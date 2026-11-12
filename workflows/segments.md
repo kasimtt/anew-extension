@@ -56,7 +56,8 @@ step 8).
   is strict: stages are role-owned. Analyst starts
   with ANALYZE; subsequent roles run PLAN, BUILD, REVIEW, VERIFY in their own sessions."*
 - **lite** — run the segments in order with their entry checks intact, stopping at four gates:
-  spec approval · plan approval · triage · ship. Before opening a spec, look for an existing one
+  spec approval (a UI spec asks its design approval first, as its own decision — ANEW-F0001) ·
+  plan approval · triage · ship. Before opening a spec, look for an existing one
   that matches the request; if found, report its status and the plan's approval line and resume
   from the next gate — never a twin spec.
 - **lite, one-pass review** — the chainer may ask **one** independent session or read-only

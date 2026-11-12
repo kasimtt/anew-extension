@@ -19,7 +19,8 @@ spec does not say. Write its address in `- Design:`. Then the design gate, BEFOR
 design approval as its own decision, and on approval record the fixed version ("<address>
 (<version label>)", or a dated export when the tool has no versions) and
 `- Design approved by / on: <name>, <YYYY-MM-DD>`. Feedback → redraw, ask again. A design change
-after approval is a spec change (R-08). No UI → `- Design: none — no user interface`.
+after approval is a spec change (R-08). No UI → `- Design: none — no user interface`, and the same phrase opens the User experience
+section; it stays English in every docs language (doctor reads it).
 Write in the docs language (AGENTS.md, Language); field labels and Status values stay English.
 
 Then run a SELF-CRITIQUE pass as a hostile reader: which questions would a developer still have?

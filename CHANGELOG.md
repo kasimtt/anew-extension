@@ -50,11 +50,14 @@ part).
   reviewer and QA. A later design change is a spec change (R-08).
 - **doctor**: past approval (and in a new ship), a UI spec without the address or a dated design
   approval is a gate — WARN locally, FAIL under `--strict`. An empty "User experience" counts as
-  UI; a spec without that heading (older) is not judged. selftest 281 → 305.
+  UI, and only the whole phrase "none — no user interface" means no UI; a spec without that
+  heading (older) is not judged. selftest 281 → 313.
 - **VERIFY** compares screenshots with the approved artboards, screen × state (`docs/testing.md`,
   `prompts/verify.md`). The Claude Code adapter names the tool (Claude Design); the core names none.
 
-Upgrade: copy the two template fields into your open UI specs before they pass approval.
+Upgrade: copy the two template fields into your open UI specs. A UI spec already `Approved` or
+`In progress` fails `--strict` until it carries both records — draw and approve its design (or
+record an existing approved one) in the upgrade PR.
 
 ## v1.24.1 — v1.24 is the first LTS line
 

@@ -456,6 +456,28 @@ doctor;            has "UI spec without a design artifact: specs/active/0056-tpl
 put specs/active/0057-mtpl.md '# Spec 0057 (mini)' '- Status: Approved' '- Source: REQ-2' '- Design: <!-- MANDATORY for a UI change' \
   '  … -->' '' '## Preserved behavior' '- [ ] PB-1 — y'
 doctor;            hasnt "0057-mtpl.md" "… nor in a mini-spec (left to review, no false approval gate)"
+# Review round 1 (spec 0006): "none" is the whole phrase, not a prefix; the heading in any case;
+# the full-spec rule wins over the mini-spec one; no name, CRLF and a commented Status.
+ux_body() { put "specs/active/$1" "# Spec ${1%%-*}" '- Status: Approved' '- Design:' '- Design approved by / on: —' \
+              '' "$2" "$3" '- States: empty, error, success'; }
+reset; ux_body 0060-none-of.md '## User experience' 'None of the existing screens change; a new export dialog opens from the list.'
+ux_body 0061-nonetheless.md '## User experience' 'Nonetheless the list screen gets a filter bar.'
+ux_body 0062-tick.md '## User experience' '`none` for now; later a settings page'
+ux_body 0063-case.md '## User Experience' '- Flow: list → detail'
+put specs/active/0064-full-pb.md '# Spec 0064' '- Status: Approved' '- Design:' '' '## User experience' '- Flow: a → b' \
+  '' '## Acceptance criteria' '- [ ] AC-1 — x' '' '## Preserved behavior' '- [ ] PB-1 — y'
+ux_ui 0065-noname.md Approved 'https://example.invalid/artifact/4' ', 2026-11-12'
+printf '%s\r\n' '# Spec 0066' '- Status: Approved' '- Design:' '' '## User experience' '- Flow: a → b' > "$W/specs/active/0066-crlf.md"
+put specs/active/0067-cstatus.md '# Spec 0067' '- Status: Approved <!-- by Ada -->' '- Design:' '' '## User experience' '- Flow: a → b'
+doctor
+has "UI spec without a design artifact: specs/active/0060-none-of.md" "'None of …' is a UI body, not 'none' (whole phrase only)"
+has "UI spec without a design artifact: specs/active/0061-nonetheless.md" "… nor 'Nonetheless …'"
+has "UI spec without a design artifact: specs/active/0062-tick.md" "… nor '\`none\` for now …'"
+has "UI spec without a design artifact: specs/active/0063-case.md" "the User experience heading is read in any case"
+has "UI spec without a design artifact: specs/active/0064-full-pb.md" "a full UI spec with a Preserved behavior heading is judged as a full spec"
+has "UI spec without a recorded design approval: specs/active/0065-noname.md" "an approval without a name is not recorded"
+has "UI spec without a design artifact: specs/active/0066-crlf.md" "a CRLF UI spec is judged"
+has "UI spec without a design artifact: specs/active/0067-cstatus.md" "a Status with a comment is judged"
 grep -q '^- Design approved by / on:' "$W/specs/TEMPLATE.md"; report $? "specs/TEMPLATE.md carries the label doctor reads"
 grep -q '^- Design approved by / on:' "$W/specs/TEMPLATE-mini.md"; report $? "specs/TEMPLATE-mini.md carries it too"
 

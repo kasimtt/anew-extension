@@ -10,7 +10,7 @@ Rule: Segments always stop; $new-feature flows only as far as the mode allows.
   with $analyze; subsequent roles run $plan, $build, $review, $verify in their own sessions."
 - **unset** — stop; bootstrap has not run (run $bootstrap).
 - **lite** — chain $analyze → $plan → $build → $review → $verify for the feature described after
-  the skill name, entry checks included. Stop at the four gates (spec approval, plan approval,
+  the skill name, entry checks included. Stop at the four gates (spec approval — a UI spec asks its design approval first, as its own decision, ANEW-F0001 —, plan approval,
   triage, ship), one decision per gate message (workflows/segments.md, Contract, Gate). If a matching spec exists in specs/active/, resume from its next gate — never a
   twin spec. REVIEW cannot be independent inside this session: at that gate, tell the human to open
   a fresh Codex session and run $review there, then paste the findings back here for triage. When
