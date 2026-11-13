@@ -51,7 +51,7 @@ part).
 - **doctor**: past approval (and in a new ship), a UI spec without the address or a dated design
   approval is a gate — WARN locally, FAIL under `--strict`. An empty "User experience" counts as
   UI, and only the whole phrase "none — no user interface" means no UI; a spec without that
-  heading (older) is not judged. selftest 281 → 313.
+  heading (older) is not judged. selftest 281 → 317.
 - **VERIFY** compares screenshots with the approved artboards, screen × state (`docs/testing.md`,
   `prompts/verify.md`). The Claude Code adapter names the tool (Claude Design); the core names none.
 

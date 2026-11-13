@@ -112,7 +112,7 @@ Chosen at bootstrap, recorded in `AGENTS.md`, honored by every workflow:
 | | **Lite** — solo developers, low-risk work | **Strict** — teams, critical systems |
 |---|---|---|
 | Spine | Spec → Plan → Build → Review → Verify | Full spine incl. Intent → Clarify |
-| Human gates | Spec approval (light yes/no) · plan approval; `/new-feature` also asks at triage and ship | Spec approval · plan approval · finding triage · ship decision |
+| Human gates | Spec approval (light yes/no; a UI spec: design approval first) · plan approval; `/new-feature` also asks at triage and ship | Spec approval (a UI spec: design approval first) · plan approval · finding triage · ship decision |
 | Review | Independent (separate session/subagent) | Independent + one role per session (Documented; see the table below) |
 | Ceremony | Minimum viable | Full evidence trail |
 

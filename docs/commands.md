@@ -10,7 +10,7 @@ disagree, that file wins and this page is out of date.
 ```mermaid
 flowchart LR
   I([INTENT]) --> A["/analyze<br/>ANALYZE"]
-  A --> G1{{"spec approval"}}
+  A --> G1{{"spec approval<br/>(UI: design approval first)"}}
   G1 --> P["/plan<br/>PLAN"]
   P --> G2{{"plan approval"}}
   G2 --> B["/build<br/>BUILD"]
@@ -22,7 +22,7 @@ flowchart LR
   G4 --> S([SHIP])
 ```
 
-The hexagons are the four human gates. `/new-feature` is the chainer: in lite it runs the whole
+The hexagons are the four human gates; a UI spec asks its design approval before spec approval (ANEW-F0001). `/new-feature` is the chainer: in lite it runs the whole
 row above, asking at each gate; in strict it refuses and each role runs its own segment command.
 
 Always available, outside the loop:
@@ -159,7 +159,7 @@ Mode is the `Mode:` line in `AGENTS.md`, set at bootstrap (`workflows/README.md`
   Rule: **Segments always stop; /new-feature flows only as far as the mode allows.**
 - **When to use it:** lite — every new feature starts here.
 - **Reads / writes:** `AGENTS.md`, `workflows/segments.md`; then whatever each segment reads and writes.
-- **Stops at:** spec approval · plan approval · triage · ship, continuing only on explicit approval.
+- **Stops at:** spec approval (a UI spec: design approval first) · plan approval · triage · ship, continuing only on explicit approval.
   A matching spec in `specs/active/` is resumed from its next gate, never twinned.
   One-pass review: outside a sensitive area and with no criterion that needs the code broken on
   purpose, a clean `/review` carries `/verify` in the same independent session; the gates stay
